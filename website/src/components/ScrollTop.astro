@@ -1,0 +1,31 @@
+<div class="fixed w-full bottom-0 right-0 pointer-events-none">
+  <div class="container max-w-screen-xl mx-auto pb-4 md:pb-2 pr-6 text-right">
+    <button
+      id="scroll-top"
+      class="pointer-events-auto rounded-full bg-slate-800 border border-slate-900 w-10 h-10 z-50 transition-transform duration-100">
+      <img src="/double-up.svg" class="w-full h-full object-cover scale-75" />
+    </button>
+  </div>
+</div>
+
+<script>
+  {
+    const button: HTMLButtonElement =
+      document.querySelector("button#scroll-top");
+
+    button.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 300) {
+        button.style.transform = "scale(1)";
+      } else {
+        button.style.transform = "scale(0)";
+      }
+    });
+  }
+</script>

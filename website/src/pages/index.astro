@@ -1,0 +1,88 @@
+---
+import ScrollTop from "../components/ScrollTop.astro";
+import { WEBSITE_NAME } from "../constants";
+import { fetchStrapiAPI } from "../lib/strapi";
+
+let handbooks: any[] = [];
+
+try {
+  handbooks = (await fetchStrapiAPI("/handbooks")).data.map(
+    (h) => h.attributes
+  );
+} catch (error) {
+  // @ts-ignore
+  throw error.message;
+}
+
+console.log(handbooks);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Andrea</title>
+  </head>
+  <body>
+
+    <main class="relative min-h-screen w-screen grid place-items-center pb-10">
+      <button class="absolute bottom-0 p-3" onclick="
+      seeMore();
+      ">
+        <img src="/expand.svg" alt="see more" />
+      </button>
+
+      <script is:inline>
+        function seeMore() {
+          console.log("hai visto?");
+          document
+            .getElementById("apartment-list")
+            .scrollIntoView({ behavior: "smooth" });
+        }
+      </script>
+      <div>
+        <div
+          class="rounded-full bg-blue-700 border border-blue-800 w-fit py-1 px-4 mb-1 mx-auto"
+          style="box-shadow: 0 0 10px rgb(29 78 216 / 0.5);">
+          <h2 class="text-xl bold text-neutral-100">
+            {WEBSITE_NAME}
+          </h2>
+        </div>
+        <h1
+          class="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4">
+          Trova la casa dei
+          <i
+            class="bg-clip-text pr-3 text-transparent bg-gradient-to-r from-blue-500 to-teal-400">
+            tuoi sogni
+          </i>
+        </h1>
+      </div>
+    </main>
+
+    <hr class="mx-4 border-slate-300" />
+
+    <section id="apartment-list" class="min-h-screen p-8">
+      <h2 class="text-lg uppercase font-semibold">
+        Guide agli appartamenti <span class="pl-2">:)</span>
+      </h2>
+      <div class="grid grid-cols-[auto_1fr] gap-x-2 mt-4 leading-5">
+        {
+          handbooks.map((h, idx) => (
+            <>
+              <b>url: </b>
+              <a href={h.url} class="text-blue-700 underline">
+                {h.url || ". . ."}
+              </a>
+              <b>name: </b>
+              <span>{h.apartment}</span>
+              {idx != handbooks.length - 1 && (
+                <div class="col-span-full h-px bg-slate-600 my-3" />
+              )}
+            </>
+          ))
+        }
+      </div>
+    </section>
+  </body>
+</html>

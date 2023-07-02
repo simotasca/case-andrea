@@ -1,0 +1,176 @@
+---
+export interface Props {
+  overflow?: "hidden" | "visible";
+  duration?: number;
+  minSwipeDistance?: number;
+  nextArrowId?: string;
+  prevArrowId?: string;
+}
+
+let {
+  overflow = "hidden",
+  duration = 500,
+  minSwipeDistance = 50,
+  prevArrowId,
+  nextArrowId,
+} = Astro.props;
+---
+
+<astro-carousel
+  class="block"
+  style={[overflow === "hidden" && "overflow-x: hidden"].join(";")}
+  data-duration={duration}
+  data-min-swipe-distance={minSwipeDistance}
+  data-prev-id={prevArrowId}
+  data-next-id={nextArrowId}>
+  <div
+    class="astro-carousel__container"
+    style={[`transition-duration: ${duration}ms`].join(";")}>
+    <slot />
+  </div>
+</astro-carousel>
+
+<script>
+  class AstroCarousel extends HTMLElement {
+    container: HTMLDivElement;
+    items: NodeListOf<HTMLDivElement>;
+    arrowPrevious: HTMLElement;
+    arrowNext: HTMLElement;
+    lastItem: HTMLDivElement;
+
+    isSlidin = false;
+
+    constructor() {
+      super();
+      this.container = this.querySelector(".astro-carousel__container");
+      this.items = this.querySelectorAll(".astro-carousel-item");
+
+      this.lastItem = this.items[this.items.length - 1];
+      this.initArrows();
+      this.initGestures();
+    }
+
+    initArrows() {
+      let nextId = this.dataset.nextId;
+      let prevId = this.dataset.prevId;
+
+      if (nextId) {
+        if (nextId.startsWith("#")) nextId = nextId.slice(1);
+        document.querySelector("#" + nextId).addEventListener("click", (e) => {
+          e.preventDefault();
+          this.slideToNext();
+        });
+      }
+
+      if (prevId) {
+        if (prevId.startsWith("#")) prevId = prevId.slice(1);
+        document.querySelector("#" + prevId).addEventListener("click", (e) => {
+          e.preventDefault();
+          this.slideToPrevious();
+        });
+      }
+    }
+
+    touchStartX: number;
+    initGestures() {
+      this.addEventListener("touchstart", (e) => {
+        this.touchStartX = e.touches[0].clientX;
+      });
+
+      this.addEventListener("touchend", (e) => {
+        const touchEndX = e.changedTouches[0].clientX;
+        this.handleSwipe(touchEndX - this.touchStartX);
+      });
+    }
+
+    handleSwipe(swipeDistance: number) {
+      var minSwipeDistance = Number(this.dataset.minSwipeDistance);
+      if (Math.abs(swipeDistance) >= minSwipeDistance) {
+        if (swipeDistance < 0) {
+          // Swipe left
+          this.slideToNext();
+        } else {
+          // Swipe right
+          this.slideToPrevious();
+        }
+      }
+    }
+
+    slideToNext() {
+      if (this.isSlidin) return;
+
+      const rect = this.getBoundingClientRect();
+      let target: HTMLElement = null;
+      for (const item of this.items) {
+        const itemRect = item.getBoundingClientRect();
+        // only outside elements
+        if (itemRect.right < rect.right) continue;
+        // find the nearest
+        if (target && target.getBoundingClientRect().right < itemRect.right) {
+          continue;
+        }
+        target = item as HTMLElement;
+      }
+      if (target) {
+        const translate = Math.min(
+          target.offsetLeft, // allineo il lato sinistro dell'elemento al lato sinistro del carousel
+          this.lastItem.offsetLeft - rect.width + this.lastItem.offsetWidth // senza sforare
+        );
+        this.container.style.transform = `translateX(${-translate}px)`;
+        this.startSlidin();
+      }
+    }
+
+    slideToPrevious() {
+      if (this.isSlidin) return;
+
+      const rect = this.getBoundingClientRect();
+      let target: HTMLElement = null;
+      for (const item of this.items) {
+        const itemRect = item.getBoundingClientRect();
+        // only outside elements
+        if (itemRect.left >= rect.left - 1) continue;
+        // find the rightmost
+        if (target && target.getBoundingClientRect().right > itemRect.right) {
+          continue;
+        }
+        target = item as HTMLElement;
+      }
+      if (target) {
+        // allineo il lato destro dell'elemento al bordo destro del carousel
+        // senza andare in negativo
+        const translate = Math.max(
+          target.offsetLeft - rect.width + target.offsetWidth,
+          0
+        );
+        this.container.style.transform = `translateX(${-translate}px)`;
+        this.startSlidin();
+      }
+    }
+
+    startSlidin() {
+      this.isSlidin = true;
+      setTimeout(() => {
+        this.isSlidin = false;
+      }, Number(this.dataset.duration) + 50);
+    }
+  }
+
+  customElements.define("astro-carousel", AstroCarousel);
+</script>
+
+<style>
+  .astro-carousel__container {
+    transition-property: transform;
+    transition-timing-function: ease-in-out;
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    transform: translateX(0);
+  }
+
+  .astro-carousel__arrow-previous,
+  .astro-carousel__arrow-next {
+    display: contents;
+  }
+</style>

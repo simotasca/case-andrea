@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_info_addresses",
+  "info": {
+    "displayName": "address",
+    "icon": "pinMap"
+  },
+  "options": {},
+  "attributes": {
+    "address": {
+      "type": "string",
+      "required": true
+    },
+    "city": {
+      "type": "string",
+      "required": true
+    },
+    "country": {
+      "type": "string",
+      "default": "IT"
+    },
+    "cap": {
+      "type": "string"
+    }
+  }
+}

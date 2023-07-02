@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "handbooks",
+  "info": {
+    "singularName": "handbook",
+    "pluralName": "handbooks",
+    "displayName": "handbook",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "url": {
+      "type": "string",
+      "unique": true,
+      "required": false
+    },
+    "apartment": {
+      "type": "text",
+      "required": true,
+      "unique": true
+    },
+    "address": {
+      "type": "component",
+      "repeatable": false,
+      "component": "info.address",
+      "required": false
+    },
+    "content": {
+      "type": "dynamiczone",
+      "components": [
+        "editor.section",
+        "editor.ritch-text",
+        "editor.video"
+      ],
+      "required": false
+    }
+  }
+}

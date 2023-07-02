@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  website:
+    container_name: andrea-website
+    build:
+      context: ./website
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./website:/usr/src/app
+    env_file:
+      - ./website/.env.dev
+
+  dashboard:
+    container_name: andrea-dashboard
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    ports:
+      - "1337:1337"
+    volumes:
+      - ./dashboard:/opt/app
+    env_file:
+      - ./dashboard/.env.dev
+    depends_on:
+      - dashboardDB
+  
+  dashboardDB:
+    container_name: andrea-dashboard-db
+    image: postgres:12.0-alpine
+    restart: unless-stopped
+    volumes:
+      - dashboard-data:/var/lib/postgresql/data/ #using a volume
+    ports:
+      - "5432:5432"
+    env_file:
+    - ./db/.env
+
+volumes:
+  dashboard-data:

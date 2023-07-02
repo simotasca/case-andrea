@@ -1,0 +1,13 @@
+---
+import IndexLink from "./IndexLink.astro";
+
+export interface Props {
+  sections: { name: string; hash: string; n: number }[];
+}
+
+const { sections } = Astro.props;
+---
+
+<ol>
+  {sections.map((sec) => <IndexLink {...sec} />)}
+</ol>

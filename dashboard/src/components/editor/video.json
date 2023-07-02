@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_editor_videos",
+  "info": {
+    "displayName": "video",
+    "icon": "play"
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "allowedTypes": [
+        "videos"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    }
+  }
+}

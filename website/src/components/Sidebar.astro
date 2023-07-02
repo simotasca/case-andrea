@@ -1,0 +1,145 @@
+---
+import BrandIdentity from "./BrandIdentity.astro";
+export interface Props {
+  sections: { name: string; hash: string; n: number }[];
+}
+
+const { sections } = Astro.props;
+---
+
+<!-- SIDEBAR -->
+<div class="order-1 md:order-[0] md:border-r border-neutral-300 font-sans">
+  <div class="md:hidden mt-4 py-8 border-t border-slate-300">
+    <BrandIdentity />
+  </div>
+  <!-- SIDEBAR CONTENT -->
+  <div id="scrolly-container" class="md:h-full pb-4">
+    <div id="scrolly-spacer" class="max-md:hidden"></div>
+    <div id="scrolly-sidebar" class="md:sticky pl-2 overflow-hidden">
+      <div class="grid gap-y-8 grid-cols-1">
+        <div>
+          <!-- TRADUZIONE -->
+          <div class="text-neutral-800 flex items-center gap-3 mb-4">
+            <div class="rounded bg-slate-200 grid place-items-center">
+              <span
+                class="skiptranslate material-symbols-outlined text-neutral-500 scale-75">
+                g_translate
+              </span>
+            </div>
+            <span class="font-medium">traduzione</span>
+          </div>
+
+          <div class="relative">
+            <div
+              class="absolute w-px h-full bg-slate-200 -translate-x-px top-0 left-3">
+            </div>
+            <div id="google_translate_element" class="pl-8"></div>
+          </div>
+
+          <script type="text/javascript">
+            function googleTranslateElementInit() {
+              new google.translate.TranslateElement(
+                { pageLanguage: "it" },
+                "google_translate_element"
+              );
+            }
+          </script>
+          <script
+            type="text/javascript"
+            src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+          ></script>
+        </div>
+
+        <div>
+          <!-- INDICE -->
+          <div class="text-neutral-800 flex items-center gap-3 mb-4">
+            <div class="rounded bg-slate-200 grid place-items-center">
+              <span
+                class="skiptranslate material-symbols-outlined text-neutral-500 scale-75">
+                list
+              </span>
+            </div>
+            <span class="font-medium">indice</span>
+          </div>
+
+          <div class="relative pb-4">
+            <div
+              class="absolute w-px h-[calc(100%-1rem)] bg-slate-200 -translate-x-px top-0 left-3">
+            </div>
+            <ul class="pl-6 pr-4 flex flex-col gap-1">
+              {
+                [
+                  ...sections,
+                  ...sections,
+                  ...sections,
+                  ...sections,
+                  ...sections,
+                  ...sections,
+                  ...sections,
+                ].map((sec) => (
+                  <li
+                    data-section-name={sec.name}
+                    class="rounded pl-2 pr-4 pt-1 pb-0.5 hover:bg-slate-100 hover:outline hover:outline-1 hover:outline-slate-200 cursor-pointer">
+                    <a href={"#" + sec.hash} class="leading-[1.2]">
+                      <p class="text-xs font-serif pb-0.5 text-neutral-700">
+                        Sezione {sec.n}
+                      </p>
+                      <p class="-mt-1 mb-1 font-medium [.active_&]:text-blue-500 [.active_&]:font-bold">
+                        {sec.name}
+                      </p>
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const scrolly: HTMLDivElement = document.querySelector("#scrolly-sidebar");
+  const header = document.querySelector("main");
+  const pageContent: HTMLDivElement = document.querySelector("#page-content");
+
+  initSidebar();
+
+  function initSidebar() {
+    const spacer: HTMLDivElement = document.querySelector("#scrolly-spacer");
+
+    if (scrolly.clientHeight < window.innerHeight - header.clientHeight - 25) {
+      // 64 a caso...
+      scrolly.style.top = `calc(${header.clientHeight}px + 1rem + 1px)`; // header + padding + border
+      scrolly.style.bottom = "unset";
+      if (spacer) spacer.style.height = "0";
+      return;
+    }
+
+    scrolly.style.top = "unset";
+    scrolly.style.bottom = "0px";
+
+    if (spacer)
+      spacer.style.height =
+        pageContent.clientHeight +
+        header.clientHeight -
+        scrolly.clientHeight +
+        "px";
+  }
+
+  let timeout = null;
+  window.addEventListener("resize", () => {
+    if (timeout) {
+      clearTimeout(timeout);
+      timeout = null;
+    }
+    timeout = setTimeout(() => {
+      initSidebar();
+    }, 100);
+  });
+
+  window.addEventListener("load", () => {
+    initSidebar();
+  });
+</script>

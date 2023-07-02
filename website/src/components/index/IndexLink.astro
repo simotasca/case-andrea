@@ -1,0 +1,8 @@
+---
+const { n, name, hash } = Astro.props;
+---
+
+<li class="text-lg font-sans font-semibold">
+  <span class="pr-2">{n})</span>
+  <a href={"#" + hash} class="text-blue-600 underline">{name}</a>
+</li>

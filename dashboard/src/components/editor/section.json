@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_editor_sections",
+  "info": {
+    "displayName": "Section Title",
+    "icon": "bulletList",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

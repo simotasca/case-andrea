@@ -1,0 +1,190 @@
+---
+import BrandIdentity from "../../components/BrandIdentity.astro";
+import MobileStickyNavbar from "../../components/MobileStickyNavbar.astro";
+import RichText from "../../components/editor/RichText.astro";
+import ScrollTop from "../../components/ScrollTop.astro";
+import SectionTitle from "../../components/editor/SectionTitle.astro";
+import Sidebar from "../../components/Sidebar.astro";
+import { fetchStrapiAPI } from "../../lib/strapi";
+import { stringToUrl } from "../../lib/string-utils";
+import Video from "../../components/editor/Video.astro";
+
+const { slug } = Astro.params;
+
+// check errori e 404
+const handbook = (
+  await fetchStrapiAPI("handbooks", {
+    filters: {
+      url: { $contains: slug },
+    },
+    populate: {
+      content: {
+        populate: "value"
+      }
+    },
+  })
+).data[0].attributes;
+
+const sectionsCount = new Map<string, number>();
+const sections: { name: string; hash: string; n: number }[] = [];
+let n = 0;
+handbook.content.forEach((c) => {
+  if (c.__component === "editor.section") {
+    let hash = stringToUrl(c.name);
+    if (sectionsCount.has(hash)) {
+      let n = Number(sectionsCount.get(hash));
+      hash = hash + "-" + String(n);
+      sectionsCount.set(hash, n + 1);
+    } else {
+      sectionsCount.set(hash, 0);
+    }
+    n = n + 1;
+    sections.push({ name: c.name, hash: hash, n });
+    c.hash = hash;
+    c.n = n;
+  }
+});
+console.log(handbook.content)
+---
+
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,700,1,0"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .text-overlay-shadow {
+        text-shadow: 0px 0px 5px rgb(50, 50, 50), 0px 0px 2px rgb(50, 50, 50);
+      }
+    </style>
+  </head>
+  <body class="font-serif text-neutral-900 overflow-x-hidden">
+    <ScrollTop />
+
+    <div
+      class="container max-w-screen-xl mx-auto px-6 pt-4 md:pt-0 md:px-8 pb-4">
+      <div class="grid md:grid-cols-[220px_1fr] lg:grid-cols-[270px_1fr]">
+        <div
+          class="pt-4 md:pb-4 md:sticky md:top-0 z-50 md:border-b border-slate-300 bg-white md:mb-4">
+          <section class="w-full h-full grid place-items-start items-center">
+            <div class="md:translate-y-px max-md:-translate-x-1">
+              <BrandIdentity />
+            </div>
+          </section>
+        </div>
+
+        <main
+          class="bg-white border-b border-slate-300 md:sticky top-0 font-mont py-4 md:pl-4 md:mb-4 z-50">
+          <h1 class="text-2xl font-extrabold uppercase leading-[0.95]">
+            <span
+              class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-500">
+              {handbook.apartment}
+            </span>
+          </h1>
+          <p
+            class="text-sm md:text-base leading-tight text-slate-700 font-mont font-semibold pl-px">
+            Luminoso attico con terrazzi e piscina condominiale
+          </p>
+        </main>
+
+        <!-- <hr class="col-span-full border-slate-300 md:mb-4" /> -->
+
+        <Sidebar sections={sections} />
+
+        <MobileStickyNavbar sections={sections} />
+
+        <div id="page-content" class="md:pl-4 md:pb-8">
+          <div class="md:overflow-hidden md:pl-2">
+            <!-- SECTIONS -->
+            {
+              handbook.content.map(
+                (c) =>
+                  ({
+                    "editor.section": (
+                      <SectionTitle id={c.hash} title={c.name} n={c.n} />
+                    ),
+                    "editor.ritch-text": <RichText value={c.value} />,
+                    "editor.video": <Video value={c.value} />,
+                  }[c.__component])
+              )
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    (() => {
+      const header = document.querySelector("main");
+      // SMOOTH LINK NAVIGATION
+      document.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          window.scrollTo({
+            top:
+              document.documentElement.scrollTop +
+              document.querySelector(link.hash).getBoundingClientRect().y -
+              (header.clientHeight + 20),
+            behavior: "smooth",
+          });
+        });
+      });
+
+      // PROSE LINK TARGET _blank
+      document.querySelectorAll(".prose a").forEach((link) => {
+        link.target = "_blank";
+      });
+    })();
+  </script>
+
+  <script>
+    const highlightSections = (...target) => {
+      navLinks.forEach((l) => l.classList.remove("active"));
+      target.forEach((t) => t.classList.add("active"));
+    };
+
+    // SCROLLSPY
+    const scrollspy = document.querySelector("#scrollspy");
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const title = entry.target.dataset.sectionTitle;
+            if (title) {
+              scrollspy.innerHTML = title;
+              highlightSections(
+                ...document.querySelectorAll(`[data-section-name="${title}"]`)
+              );
+            }
+          }
+        });
+      },
+      { rootMargin: "0% 0% -30% 0%" }
+    );
+
+    const navLinks = document.querySelectorAll("[data-section-name]");
+
+    document
+      .querySelectorAll("[data-section-title]")
+      .forEach((st) => observer.observe(st));
+  </script>
+</html>
