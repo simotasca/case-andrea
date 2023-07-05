@@ -1,0 +1,117 @@
+---
+import { getStrapiUrl } from "../../lib/strapi";
+const { value, caption } = Astro.props;
+const images = value?.data?.map(({ attributes }) => attributes);
+---
+
+<div class="max-w-lg my-4">
+  {
+    images.length == 1 ? (
+      <img
+        src={getStrapiUrl(images[0].url, null, false)}
+        width={images[0].width}
+        height={images[0].height}
+        class="w-full"
+      />
+    ) : (
+      <x-image-carousel
+        data-sources={images
+          .map((i) => getStrapiUrl(i.url, null, false))
+          .join(";")}
+        class="block">
+        <div class="relative">
+          <button
+            data-carousel-prev
+            class="absolute grid place-content-center top-1/2 left-0 -translate-x-1/2 -translate-y-1/4 w-10 h-10 bg-white rounded-full shadow-md border border-slate-200">
+            <p class="font-black font-sans text-lg text-slate-600 -translate-y-px">
+              {"<"}
+            </p>
+          </button>
+          <button
+            data-carousel-next
+            class="absolute grid place-content-center top-1/2 right-0 translate-x-1/2 -translate-y-1/4 w-10 h-10 bg-white rounded-full shadow-md border border-slate-200">
+            <p class="font-black font-sans text-lg text-slate-600 -translate-y-px">
+              {">"}
+            </p>
+          </button>
+          <button
+            data-carousel-prev
+            class="absolute top-0 left-0 w-1/2 h-full"
+          />
+          <button
+            data-carousel-next
+            class="absolute top-0 right-0 w-1/2 h-full"
+          />
+          <img
+            id="main-carousel-image"
+            src={getStrapiUrl(images[0].url, null, false)}
+            class="w-full aspect-video object-contain bg-slate-100 mb-3"
+          />
+        </div>
+        <div class="overflow-auto">
+          <div id="carousel-preview" class="flex flex-nowrap w-fit gap-3">
+            {images.map((img) => (
+              <div class="bg-slate-100 p-0.5 border border-slate-400 rounded-sm cursor-pointer">
+                <img
+                  data-src={getStrapiUrl(img.url, null, false)}
+                  src={getStrapiUrl(img.formats.thumbnail.url, null, false)}
+                  width={img.formats.thumbnail.width}
+                  height={img.formats.thumbnail.height}
+                  class="w-24 min-w-[6rem] shrink-0 aspect-image object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </x-image-carousel>
+    )
+  }
+
+  {
+    caption && (
+      <p class="pl-2 italic text-neutral-600 leading-tight mt-1 text-justify">
+        {caption}
+      </p>
+    )
+  }
+</div>
+
+<script>
+  class HTMLImageCarouselElement extends HTMLElement {
+    constructor() {
+      super();
+      let main = this.querySelector("#main-carousel-image") as HTMLImageElement;
+      let thumbnails = this.querySelectorAll(
+        "#carousel-preview > div > img"
+      ) as NodeListOf<HTMLImageElement>;
+
+      const sources = this.dataset.sources.split(";");
+      const tot = sources.length;
+      let curr = 0;
+
+      thumbnails.forEach((tmb) =>
+        tmb.addEventListener("click", () => {
+          main.src = tmb.dataset.src;
+          curr = sources.findIndex((s) => s == tmb.dataset.src);
+        })
+      );
+
+      this.querySelectorAll("[data-carousel-next]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          curr++;
+          if (curr >= tot) curr = 0;
+          main.src = sources[curr];
+        });
+      });
+
+      this.querySelectorAll("[data-carousel-prev]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          curr--;
+          if (curr < 0) curr = tot - 1;
+          main.src = sources[curr];
+        });
+      });
+    }
+  }
+  customElements.define("x-image-carousel", HTMLImageCarouselElement);
+</script>

@@ -1,0 +1,59 @@
+---
+import { getStrapiUrl } from "../../lib/strapi";
+const { value, caption } = Astro.props;
+const attachments = value.data.map((d) => d.attributes);
+
+function shuffle(array) {
+  let currentIndex = array.length,
+    randomIndex;
+
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+
+  return array;
+}
+
+const grads = shuffle([
+  "from-indigo-400 to-cyan-400 border-blue-500 text-black",
+  "from-emerald-400 to-cyan-400 border-emerald-500 text-neutral-950",
+  "from-orange-300 to-red-500 border-orange-700 text-black",
+  "from-amber-200 to-yellow-400 border-orange-300 text-orange-950",
+  "from-stone-500 to-stone-700 border-neutral-950 text-white",
+]);
+---
+
+<div class="max-w-prose my-4">
+  <div class="flex gap-2 gap-y-1 font-mont flex-wrap">
+    {
+      attachments.map((a, i) => (
+        <a href={getStrapiUrl(a.url, null, false)} target="_blank" download>
+          <div class="flex items-stretch shadow">
+            <div
+              class:list={[
+                "font-bold flex items-center text-sm bg-gradient-to-tl rounded-tl-md rounded-bl-md px-1.5 border border-r-0",
+                grads[i % grads.length],
+              ]}>
+              <span class="opacity-80">{a.ext.slice(1)}</span>
+            </div>
+            <div class="bg-neutral-100 flex items-center border border-l-0 border-slate-400 px-2 rounded-tr-md rounded-br-md">
+              {a.name.replace(a.ext, "")}
+            </div>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+  <p class="pl-2 italic text-neutral-600 leading-tight mt-1 text-justify">
+    {caption}
+  </p>
+</div>

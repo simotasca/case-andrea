@@ -42,13 +42,17 @@ const allowed = [
 export default {
   beforeCreate(event) {
     const { data } = event.params;
-    event.params.data.url =
-      process.env.ASTRO_HANDBOOK_URL + stringToUrl(data.apartment);
+    if (data.apartment) {
+      event.params.data.url =
+        process.env.ASTRO_HANDBOOK_URL + stringToUrl(data.apartment);
+    }
   },
   beforeUpdate(event) {
     const { data } = event.params;
-    event.params.data.url =
-      process.env.ASTRO_HANDBOOK_URL + stringToUrl(data.apartment);
+    if (data.apartment) {
+      event.params.data.url =
+        process.env.ASTRO_HANDBOOK_URL + stringToUrl(data.apartment);
+    }
   },
 };
 

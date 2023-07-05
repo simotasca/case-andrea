@@ -2,17 +2,21 @@
   "collectionName": "components_editor_videos",
   "info": {
     "displayName": "video",
-    "icon": "play"
+    "icon": "play",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "value": {
-      "allowedTypes": [
-        "videos"
-      ],
       "type": "media",
       "multiple": false,
-      "required": true
+      "required": true,
+      "allowedTypes": [
+        "videos"
+      ]
+    },
+    "caption": {
+      "type": "text"
     }
   }
 }

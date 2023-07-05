@@ -8,18 +8,15 @@ const { sections } = Astro.props;
 ---
 
 <!-- SIDEBAR -->
-<div class="order-1 md:order-[0] md:border-r border-neutral-300 font-sans">
-  <div class="md:hidden mt-4 py-8 border-t border-slate-300">
-    <BrandIdentity />
-  </div>
+<div class="md:border-r border-neutral-300 font-sans">
   <!-- SIDEBAR CONTENT -->
-  <div id="scrolly-container" class="md:h-full pb-4">
+  <div id="scrolly-container" class="md:h-full md:pb-4">
     <div id="scrolly-spacer" class="max-md:hidden"></div>
     <div id="scrolly-sidebar" class="md:sticky pl-2 overflow-hidden">
       <div class="grid gap-y-8 grid-cols-1">
         <div>
           <!-- TRADUZIONE -->
-          <div class="text-neutral-800 flex items-center gap-3 mb-4">
+          <div class="text-neutral-800 flex items-center gap-3 max-md:mt-4 md:mb-4">
             <div class="rounded bg-slate-200 grid place-items-center">
               <span
                 class="skiptranslate material-symbols-outlined text-neutral-500 scale-75">
@@ -34,23 +31,22 @@ const { sections } = Astro.props;
               class="absolute w-px h-full bg-slate-200 -translate-x-px top-0 left-3">
             </div>
             <div id="google_translate_element" class="pl-8"></div>
+            <script type="text/javascript">
+              function googleTranslateElementInit() {
+                new google.translate.TranslateElement(
+                  { pageLanguage: "it" },
+                  "google_translate_element"
+                );
+              }
+            </script>
+            <script
+              type="text/javascript"
+              src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+            ></script>
           </div>
-
-          <script type="text/javascript">
-            function googleTranslateElementInit() {
-              new google.translate.TranslateElement(
-                { pageLanguage: "it" },
-                "google_translate_element"
-              );
-            }
-          </script>
-          <script
-            type="text/javascript"
-            src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-          ></script>
         </div>
 
-        <div>
+        <div class="max-md:hidden">
           <!-- INDICE -->
           <div class="text-neutral-800 flex items-center gap-3 mb-4">
             <div class="rounded bg-slate-200 grid place-items-center">
@@ -68,15 +64,7 @@ const { sections } = Astro.props;
             </div>
             <ul class="pl-6 pr-4 flex flex-col gap-1">
               {
-                [
-                  ...sections,
-                  ...sections,
-                  ...sections,
-                  ...sections,
-                  ...sections,
-                  ...sections,
-                  ...sections,
-                ].map((sec) => (
+                sections.map((sec) => (
                   <li
                     data-section-name={sec.name}
                     class="rounded pl-2 pr-4 pt-1 pb-0.5 hover:bg-slate-100 hover:outline hover:outline-1 hover:outline-slate-200 cursor-pointer">

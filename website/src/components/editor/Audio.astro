@@ -6,9 +6,10 @@ const mime = value?.data?.attributes?.mime;
 ---
 
 <div class="max-w-lg my-4">
-  <video controls class="w-full">
+  <audio controls>
     <source src={getStrapiUrl(url, null, false)} type={mime} />
-  </video>
+    Your browser does not support the audio element.
+  </audio>
   {
     caption && (
       <p class="pl-2 italic text-neutral-600 leading-tight mt-1 text-justify">

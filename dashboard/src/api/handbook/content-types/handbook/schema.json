@@ -33,7 +33,12 @@
       "components": [
         "editor.section",
         "editor.ritch-text",
-        "editor.video"
+        "editor.video",
+        "editor.audio",
+        "editor.file",
+        "editor.image",
+        "editor.spacer",
+        "editor.youtube"
       ],
       "required": false
     }

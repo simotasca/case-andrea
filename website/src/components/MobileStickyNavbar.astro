@@ -6,7 +6,9 @@ export interface Props {
 const { sections } = Astro.props;
 ---
 
-<div id="mobile-sections-container" class="md:hidden sticky top-0 z-50 mb-6">
+<div
+  id="mobile-sections-container"
+  class="md:hidden sticky left-0 top-0 z-50 mb-6">
   <div class="relative">
     <div class="absolute h-full bg-white shadow full-bleed -z-10"></div>
     <div class="pt-7 pb-5">
@@ -25,6 +27,8 @@ const { sections } = Astro.props;
         </button>
         <span id="scrollspy"></span>
       </div>
+
+      <!-- DROPDOWN -->
       <div
         id="mobile-sections-nav"
         class="grid overflow-hidden grid-rows-[0fr] transition-all duration-500">
@@ -48,7 +52,6 @@ const { sections } = Astro.props;
         let t = false;
 
         function toggle() {
-          console.log("togglinn");
           if (t) {
             dropdown.style.gridTemplateRows = "0fr";
             arrow.style.transform = "rotate(0deg)";
@@ -63,7 +66,6 @@ const { sections } = Astro.props;
         const container = document.querySelector("#mobile-sections-container");
         window.addEventListener("click", (e) => {
           if (e.tartget != container && !container.contains(e.target) && t) {
-            console.log("shheeeeeeesh");
             toggle();
           }
         });

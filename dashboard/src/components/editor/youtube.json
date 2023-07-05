@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_editor_youtubes",
+  "info": {
+    "displayName": "youtube",
+    "icon": "play"
+  },
+  "options": {},
+  "attributes": {
+    "link": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,27 @@
+---
+import Attachment from "./Attachment.astro";
+import Audio from "./Audio.astro";
+import Image from "./Image.astro";
+import RichText from "./RichText.astro";
+import SectionTitle from "./SectionTitle.astro";
+import Video from "./Video.astro";
+import YouTube from "./YouTube.astro";
+
+const { content } = Astro.props;
+---
+
+{
+  content.map(
+    (c) =>
+      ({
+        "editor.section": <SectionTitle id={c.hash} title={c.name} n={c.n} />,
+        "editor.ritch-text": <RichText value={c.value} />,
+        "editor.video": <Video value={c.value} caption={c.caption} />,
+        "editor.image": <Image value={c.value} caption={c.caption} />,
+        "editor.audio": <Audio value={c.value} caption={c.caption} />,
+        "editor.file": <Attachment value={c.value} caption={c.caption} />,
+        "editor.youtube": <YouTube link={c.link} />,
+        "editor.spacer": <div class="h-10" />,
+      }[c.__component])
+  )
+}

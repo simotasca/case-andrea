@@ -1,0 +1,19 @@
+---
+const { address: addressObj } = Astro.props;
+const { address, city, house_number, province, cap } = addressObj;
+
+let stringAddress = address;
+if (house_number) {
+  stringAddress += ", " + house_number;
+}
+stringAddress += ", ";
+if (cap) {
+  stringAddress += cap + " ";
+}
+stringAddress += city;
+if (province) {
+  stringAddress += " (" + province + ")";
+}
+---
+
+{stringAddress}

@@ -2,7 +2,8 @@
   "collectionName": "components_info_addresses",
   "info": {
     "displayName": "address",
-    "icon": "pinMap"
+    "icon": "pinMap",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -14,11 +15,13 @@
       "type": "string",
       "required": true
     },
-    "country": {
-      "type": "string",
-      "default": "IT"
-    },
     "cap": {
+      "type": "string"
+    },
+    "province": {
+      "type": "string"
+    },
+    "house_number": {
       "type": "string"
     }
   }

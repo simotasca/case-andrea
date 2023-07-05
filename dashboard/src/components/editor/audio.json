@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_editor_audio",
+  "info": {
+    "displayName": "audio",
+    "icon": "headphone"
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "allowedTypes": [
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "caption": {
+      "type": "text"
+    }
+  }
+}

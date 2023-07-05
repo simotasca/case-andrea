@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_editor_files",
+  "info": {
+    "displayName": "file",
+    "icon": "attachment"
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "allowedTypes": [
+        "files"
+      ],
+      "type": "media",
+      "multiple": true,
+      "required": true
+    },
+    "caption": {
+      "type": "text"
+    }
+  }
+}

@@ -14,7 +14,6 @@ try {
   throw error.message;
 }
 
-console.log(handbooks);
 ---
 
 <!DOCTYPE html>
@@ -35,7 +34,6 @@ console.log(handbooks);
 
       <script is:inline>
         function seeMore() {
-          console.log("hai visto?");
           document
             .getElementById("apartment-list")
             .scrollIntoView({ behavior: "smooth" });
@@ -50,7 +48,7 @@ console.log(handbooks);
           </h2>
         </div>
         <h1
-          class="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4">
+          class="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4 text-center">
           Trova la casa dei
           <i
             class="bg-clip-text pr-3 text-transparent bg-gradient-to-r from-blue-500 to-teal-400">

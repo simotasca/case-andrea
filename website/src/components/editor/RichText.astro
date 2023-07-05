@@ -2,7 +2,11 @@
 import { marked } from "marked";
 const { value } = Astro.props;
 
-const proseClasses = ["prose-h5:uppercase"];
+const proseClasses = [
+  "prose-h5:uppercase",
+  "prose-img:max-w-lg prose-img:w-full",
+  "prose-a:text-blue-500 visited:prose-a:text-purple-600",
+];
 
 // devo wrappare il tag pre con grid altrimenti non riesco a impedirne l'overflow
 // boh...
@@ -14,5 +18,4 @@ marked.Renderer.prototype.code = (text) => {
   `;
 };
 ---
-
 <div class:list={["prose", ...proseClasses]} set:html={marked.parse(value)} />

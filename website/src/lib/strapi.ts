@@ -18,7 +18,7 @@ export function getStrapiUrl(
   }
   // TODO: RIMUOVERE IL TRY CATCH!!
   return (
-    new URL(pathOk.join("/").replaceAll("//", "/"), strapiUrl).toString() +
+    new URL("/" + pathOk.join("/").replaceAll("//", "/"), strapiUrl).toString() +
     (qs
       ? "?" + stringify(qs, { encodeValuesOnly: true /* prettify URL */ })
       : "")

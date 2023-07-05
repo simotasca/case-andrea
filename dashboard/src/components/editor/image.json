@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_editor_images",
+  "info": {
+    "displayName": "image",
+    "icon": "picture"
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": true,
+      "required": true
+    },
+    "caption": {
+      "type": "text"
+    }
+  }
+}

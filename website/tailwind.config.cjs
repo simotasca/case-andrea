@@ -2,22 +2,22 @@ const plugin = require("tailwindcss/plugin");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
-	theme: {
-		extend: {
-			fontFamily: {
-				sans: "'Lexend Deca', sans-serif",
-				mont: "'Montserrat', sans-serif",
-				serif: "'Merriweather', serif",
-			},
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: "'Lexend Deca', sans-serif",
+        mont: "'Montserrat', sans-serif",
+        serif: "'Merriweather', serif",
+      },
       aspectRatio: {
         'image': '4 / 3',
       },
-		},
-	},
-	plugins: [
-		require('@tailwindcss/typography'),
-		plugin(({ theme, addBase, addComponents, addVariant, addUtilities }) => {
+    },
+  },
+  plugins: [
+    require('@tailwindcss/typography'),
+    plugin(({ theme, addBase, addComponents, addVariant, addUtilities }) => {
       addBase({
         "::selection": {
           color: theme("colors.dark"),
@@ -42,7 +42,7 @@ module.exports = {
           transform: "translateX(calc(-50vw - 1px))"
         }
       });
-      addVariant('children', '& > *')
+      addVariant('children', '& > *');
     }),
-	],
+  ],
 };
