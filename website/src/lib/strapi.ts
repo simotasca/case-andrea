@@ -1,24 +1,31 @@
 import { stringify } from "qs";
 import axios from "axios";
+import dotenv from "dotenv";
+import process from "process";
+dotenv.config();
 
 export function getStrapiUrl(
   path: string | string[],
   qs?: any,
   isServer = true
 ) {
-  const strapiUrl =
-    (isServer
-      ? import.meta.env["STRAPI_SERVER_URL"]
-      : import.meta.env["STRAPI_CLIENT_URL"]) ;
+  const strapiUrl = isServer
+    ? process.env["STRAPI_SERVER_URL"]
+    : process.env["STRAPI_CLIENT_URL"];
+
+  console.log("IS SERVER", isServer, process.env);
 
   // normalize path
   const pathOk = typeof path == "string" ? [path] : path;
   if (pathOk[0].startsWith("/")) {
     pathOk[0] = pathOk[0].slice(1);
   }
-  // TODO: RIMUOVERE IL TRY CATCH!!
+  console.log("/" + pathOk.join("/").replaceAll("//", "/"), strapiUrl);
   return (
-    new URL("/" + pathOk.join("/").replaceAll("//", "/"), strapiUrl).toString() +
+    new URL(
+      "/" + pathOk.join("/").replaceAll("//", "/"),
+      strapiUrl
+    ).toString() +
     (qs
       ? "?" + stringify(qs, { encodeValuesOnly: true /* prettify URL */ })
       : "")

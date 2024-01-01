@@ -9,10 +9,12 @@ services:
     restart: unless-stopped
     ports:
       - "3000:3000"
-    volumes:
-      - ./website:/usr/src/app
-    env_file:
-      - ./website/.env.prod
+    environment:
+      # - HOST="127.0.0.1"
+      - PORT=3000
+      - SITE=localhost:3000
+      - STRAPI_CLIENT_URL=http://localhost:1337
+      - STRAPI_SERVER_URL=http://dashboard:1337
 
   dashboard:
     container_name: andrea-dashboard
@@ -22,10 +24,8 @@ services:
     restart: unless-stopped
     ports:
       - "1337:1337"
-    volumes:
-      - ./dashboard:/opt/app
     env_file:
-      - ./dashboard/.env.dev
+      - ./dashboard/.env.prod
     depends_on:
       - dashboardDB
 

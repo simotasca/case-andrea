@@ -28,7 +28,7 @@ services:
       - ./dashboard/.env.dev
     depends_on:
       - dashboardDB
-  
+
   dashboardDB:
     container_name: andrea-dashboard-db
     image: postgres:12.0-alpine
@@ -38,7 +38,7 @@ services:
     ports:
       - "5432:5432"
     env_file:
-    - ./db/.env
+      - ./db/.env
 
 volumes:
   dashboard-data:

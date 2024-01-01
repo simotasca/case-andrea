@@ -1,24 +1,19 @@
 ---
-import BrandIdentity from "../../components/BrandIdentity.astro";
-import MobileStickyNavbar from "../../components/MobileStickyNavbar.astro";
-import RichText from "../../components/editor/RichText.astro";
-import ScrollTop from "../../components/ScrollTop.astro";
-import SectionTitle from "../../components/editor/SectionTitle.astro";
-import Sidebar from "../../components/Sidebar.astro";
-import { fetchStrapiAPI } from "../../lib/strapi";
-import { stringToUrl } from "../../lib/string-utils";
-import Video from "../../components/editor/Video.astro";
-import Address from "../../components/Address.astro";
-import EditorContent from "../../components/editor/EditorContent.astro";
+import Address from "../components/Address.astro";
+import BrandIdentity from "../components/BrandIdentity.astro";
+import MobileStickyNavbar from "../components/MobileStickyNavbar.astro";
+import ScrollTop from "../components/ScrollTop.astro";
+import Sidebar from "../components/Sidebar.astro";
+import EditorContent from "../components/editor/EditorContent.astro";
+import { fetchStrapiAPI } from "../lib/strapi";
+import { stringToUrl } from "../lib/string-utils";
 
 const { slug } = Astro.params;
-
-console.log("CIAOOO", new URL(slug, Astro.url.origin).toString())
 
 // check errori e 404
 const { data } = await fetchStrapiAPI("handbooks", {
   filters: {
-    url: { $eq: new URL(slug, Astro.url.origin).toString() },
+    url: { $eq: "http://www.bnbhouseguide.com/" + slug },
   },
   populate: {
     address: true,
@@ -26,11 +21,12 @@ const { data } = await fetchStrapiAPI("handbooks", {
       populate: "value",
     },
   },
+}).catch((e) => {
+  console.error("ERROR fetching hadbooks: " + e.message);
+  return [];
 });
 
-console.log("WEWEWEWE", data.length);
 if (data.length == 0) {
-  console.log("redir");
   return Astro.redirect("/");
 }
 const handbook = data[0].attributes;
