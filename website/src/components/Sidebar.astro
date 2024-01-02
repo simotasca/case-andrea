@@ -16,10 +16,13 @@ const { sections } = Astro.props;
       <div class="grid gap-y-8 grid-cols-1">
         <div>
           <!-- TRADUZIONE -->
-          <div class="text-neutral-800 flex items-center gap-3 max-md:mt-4 md:mb-4">
+          <div
+            class="text-neutral-800 flex items-center gap-3 max-md:mt-4 md:mb-4"
+          >
             <div class="rounded bg-slate-200 grid place-items-center">
               <span
-                class="skiptranslate material-symbols-outlined text-neutral-500 scale-75">
+                class="skiptranslate material-symbols-outlined text-neutral-500 scale-75"
+              >
                 g_translate
               </span>
             </div>
@@ -28,13 +31,14 @@ const { sections } = Astro.props;
 
           <div class="relative">
             <div
-              class="absolute w-px h-full bg-slate-200 -translate-x-px top-0 left-3">
+              class="absolute w-px h-full bg-slate-200 -translate-x-px top-0 left-3"
+            >
             </div>
             <div id="google_translate_element" class="pl-8"></div>
             <script type="text/javascript">
               function googleTranslateElementInit() {
                 new google.translate.TranslateElement(
-                  { pageLanguage: "it" },
+                  { pageLanguage: "en" },
                   "google_translate_element"
                 );
               }
@@ -51,7 +55,8 @@ const { sections } = Astro.props;
           <div class="text-neutral-800 flex items-center gap-3 mb-4">
             <div class="rounded bg-slate-200 grid place-items-center">
               <span
-                class="skiptranslate material-symbols-outlined text-neutral-500 scale-75">
+                class="skiptranslate material-symbols-outlined text-neutral-500 scale-75"
+              >
                 list
               </span>
             </div>
@@ -60,14 +65,16 @@ const { sections } = Astro.props;
 
           <div class="relative pb-4">
             <div
-              class="absolute w-px h-[calc(100%-1rem)] bg-slate-200 -translate-x-px top-0 left-3">
+              class="absolute w-px h-[calc(100%-1rem)] bg-slate-200 -translate-x-px top-0 left-3"
+            >
             </div>
             <ul class="pl-6 pr-4 flex flex-col gap-1">
               {
                 sections.map((sec) => (
                   <li
                     data-section-name={sec.name}
-                    class="rounded pl-2 pr-4 pt-1 pb-0.5 hover:bg-slate-100 hover:outline hover:outline-1 hover:outline-slate-200 cursor-pointer">
+                    class="rounded pl-2 pr-4 pt-1 pb-0.5 hover:bg-slate-100 hover:outline hover:outline-1 hover:outline-slate-200 cursor-pointer"
+                  >
                     <a href={"#" + sec.hash} class="leading-[1.2]">
                       <p class="text-xs font-serif pb-0.5 text-neutral-700">
                         Sezione {sec.n}

@@ -13,8 +13,6 @@ export function getStrapiUrl(
     ? process.env["STRAPI_SERVER_URL"]
     : process.env["STRAPI_CLIENT_URL"];
 
-  console.log("IS SERVER", isServer, process.env);
-
   // normalize path
   const pathOk = typeof path == "string" ? [path] : path;
   if (pathOk[0].startsWith("/")) {

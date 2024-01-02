@@ -3,17 +3,15 @@ const { id, title, n } = Astro.props;
 ---
 
 <div data-section-title={title} class:list={[n > 1 && "mt-14", "mb-8 z-0"]}>
-  {<hr class:list={["mb-1 md:mr-2", n == 1 && "max-md:hidden"]} />}
   <div class="relative">
-    <div
-      class="absolute full-bleed bg-gradient-to-br from-blue-100 to-slate-100 h-full -z-10">
+    <div class="absolute max-md:full-bleed md:w-full bg-rose-500 h-full -z-10">
     </div>
     <div
-      class="flex gap-2 text-4xl font-bold text-neutral-700 font-mont uppercase py-2 leading-8">
+      class="flex px-2 md:px-3 gap-2 text-lg leading-[1.1] md:text-xl md:leading-[1.1] font-bold text-white font-mont uppercase py-3"
+    >
       <p>{n}.</p>
       <h1 id={id} class="">{title}</h1>
     </div>
   </div>
-  <hr class="mt-1 md:mr-2" />
 </div>
 <!-- <hr class="border-neutral-300 mb-4"> -->

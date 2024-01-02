@@ -1,0 +1,88 @@
+<div
+class="container max-w-screen-xl mx-auto px-6 pt-4 md:pt-0 md:px-8 pb-4"
+>
+<div class="grid md:grid-cols-[220px_1fr] lg:grid-cols-[270px_1fr]">
+  <div
+    class="pt-4 md:pb-4 md:sticky md:top-0 z-50 md:border-b border-slate-300 bg-white md:mb-4"
+  >
+    <section class="w-full h-full grid place-items-start items-center">
+      <div class="md:translate-y-px max-md:-translate-x-1">
+        <BrandIdentity />
+      </div>
+    </section>
+  </div>
+
+  <main
+    class="bg-white border-b border-slate-300 md:sticky top-0 font-mont py-4 md:pl-4 md:mb-4 z-50"
+  >
+    <h1
+      class:list={[
+        !handbook.address && "translate-y-1",
+        "text-2xl font-extrabold uppercase leading-[0.95]",
+      ]}
+    >
+      <span
+        class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-500"
+      >
+        {handbook.apartment}
+      </span>
+    </h1>
+    {
+      handbook.address && (
+        <p class="text-sm leading-tight text-slate-700 font-mont font-medium italic pl-px">
+          <Address address={handbook.address} />
+        </p>
+      )
+    }
+  </main>
+
+  <Sidebar sections={sections} />
+
+  <div id="page-content" class="md:pl-4 md:pb-8">
+    <div class="md:overflow-hidden md:pl-2">
+      <EditorContent content={handbook.content} />
+    </div>
+  </div>
+
+  <div class="md:hidden mt-4 py-8 border-t border-slate-300">
+    <BrandIdentity />
+  </div>
+
+  <div class="md:hidden">
+    <!-- INDICE -->
+    <div class="text-neutral-800 flex items-start gap-3 mb-4">
+      <div class="rounded bg-slate-200 grid place-items-center">
+        <span
+          class="skiptranslate material-symbols-outlined text-neutral-500 scale-75"
+        >
+          list
+        </span>
+      </div>
+      <span class="font-medium">indice</span>
+    </div>
+
+    <div class="relative pb-4">
+      <div
+        class="absolute w-px h-[calc(100%-1rem)] bg-slate-200 -translate-x-px top-0 left-3"
+      >
+      </div>
+      <ul class="pl-6 pr-4 flex flex-col gap-1">
+        {
+          sections.map((sec) => (
+            <li class="rounded pl-2 pr-4 pt-1 pb-0.5 hover:bg-slate-100 hover:outline hover:outline-1 hover:outline-slate-200 cursor-pointer">
+              <a href={"#" + sec.hash} class="leading-[1.2]">
+                <p class="text-xs font-serif pb-0.5 text-neutral-700">
+                  Sezione {sec.n}
+                </p>
+                <p class="-mt-1 mb-1 font-medium [.active_&]:text-blue-500 [.active_&]:font-bold">
+                  {sec.name}
+                </p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
