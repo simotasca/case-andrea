@@ -8,17 +8,20 @@ const { sections } = Astro.props;
 
 <div
   id="mobile-sections-container"
-  class="md:hidden sticky shadow-md bg-white top-0 z-50 order-3">
+  class="md:hidden sticky shadow-md bg-white top-0 z-50 order-3"
+>
   <div class="pt-8 pb-8 px-6">
     <div class="flex items-center">
       <div
         onclick="toggle()"
-        class="bg-airbnb text-white rounded-md w-fit px-3 py-0.5 text-sm flex gap-2 mr-5">
+        class="bg-airbnb text-white rounded-md w-fit px-3 py-0.5 text-sm flex gap-2 mr-5 cursor-pointer"
+      >
         <div class="font-semibold font-mont">contents</div>
         <div class="-translate-y-px">
           <div
             id="mobile-sections-arrow"
-            class="font-extrabold font-sans text-white transition-transform origin-right duration-200">
+            class="font-extrabold font-sans text-white transition-transform origin-right duration-200"
+          >
             {">"}
           </div>
         </div>
@@ -30,11 +33,13 @@ const { sections } = Astro.props;
     <!-- DROPDOWN -->
     <div
       id="mobile-sections-nav"
-      class="grid overflow-hidden grid-rows-[0fr] transition-all duration-500">
+      class="grid overflow-hidden grid-rows-[0fr] transition-all duration-500"
+    >
       <div class="min-h-0 pl-4">
         <ul
           class="font-sans pt-8 pb-4 flex flex-col gap-3 leading-tight"
-          onclick="toggle();">
+          onclick="toggle();"
+        >
           {
             sections.map((sec) => (
               <li>

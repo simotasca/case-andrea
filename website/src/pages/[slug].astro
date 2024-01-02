@@ -93,7 +93,8 @@ handbook.content.forEach((c) => {
 
     <div class="max-w-screen-lg mx-auto max-md:contents">
       <div
-        class="flex flex-col md:grid md:h-[100vh] md:overflow-hidden md:grid-cols-[220px_1fr] lg:grid-cols-[270px_1fr]">
+        class="flex flex-col md:grid md:h-[100vh] md:overflow-hidden md:grid-cols-[220px_1fr] lg:grid-cols-[270px_1fr]"
+      >
         <MobileStickyNavbar sections={sections} />
 
         <!-- SIDEBAR -->
@@ -108,7 +109,8 @@ handbook.content.forEach((c) => {
           <!-- SIDEBAR SCROLL CONTENT -->
           <div class="relative h-full max-md:contents">
             <div
-              class="absolute inset-0 w-full h-full overflow-y-auto max-md:contents">
+              class="absolute inset-0 w-full h-full overflow-y-auto max-md:contents"
+            >
               <!-- GOOGLE TRANSLATE -->
               <div class="px-4 max-md:order-2">
                 <div class="border-b border-slate-200">
@@ -133,7 +135,8 @@ handbook.content.forEach((c) => {
                 <div class="text-neutral-800 flex items-center gap-3 mb-4">
                   <div class="rounded bg-slate-200 grid place-items-center">
                     <span
-                      class="skiptranslate material-symbols-outlined text-neutral-500 scale-75">
+                      class="skiptranslate material-symbols-outlined text-neutral-500 scale-75"
+                    >
                       list
                     </span>
                   </div>
@@ -142,14 +145,16 @@ handbook.content.forEach((c) => {
 
                 <div class="relative pb-4">
                   <div
-                    class="absolute w-px h-[calc(100%-1rem)] bg-slate-200 -translate-x-px top-0 left-3">
+                    class="absolute w-px h-[calc(100%-1rem)] bg-slate-200 -translate-x-px top-0 left-3"
+                  >
                   </div>
                   <ul class="pl-6 pr-4 flex flex-col gap-1">
                     {
                       sections.map((sec) => (
                         <li
                           data-section-name={sec.name}
-                          class="rounded pl-2 pr-4 pt-1 pb-0.5 hover:bg-neutral-100 hover:outline hover:outline-1 hover:outline-slate-200 cursor-pointer">
+                          class="rounded pl-2 pr-4 pt-1 pb-0.5 hover:bg-neutral-100 hover:outline hover:outline-1 hover:outline-slate-200 cursor-pointer"
+                        >
                           <a href={"#" + sec.hash} class="leading-[1.2]">
                             <p class="text-xs font-serif pb-0.5 text-neutral-700">
                               Sezione {sec.n}
@@ -172,13 +177,15 @@ handbook.content.forEach((c) => {
         <div class="h-full grid grid-rows-[auto_1fr] max-md:contents">
           <!-- HEADER -->
           <main
-            class="bg-white md:sticky md:top-0 font-mont px-4 md:px-6 md:mb-4 z-50 transition-transform duration-300 max-md:order-1">
+            class="bg-white md:sticky md:top-0 font-mont px-4 md:px-6 md:mb-4 z-50 transition-transform duration-300 max-md:order-1"
+          >
             <div class="border-b border-slate-300 pt-2 md:pt-7 pb-2">
               <h1
                 class:list={[
                   !handbook.address && "translate-y-1",
                   "text-xl leading-[1.1] md:text-2xl md:leading-[1.1] font-extrabold uppercase",
-                ]}>
+                ]}
+              >
                 <span class="text-airbnb">
                   {handbook.apartment}
                 </span>
@@ -196,7 +203,8 @@ handbook.content.forEach((c) => {
           <!-- SCROLL CONTENT -->
           <div class="relative w-full h-full max-md:contents">
             <div
-              class="absolute inset-0 w-full h-full overflow-y-auto max-md:contents">
+              class="absolute inset-0 w-full h-full overflow-y-auto max-md:contents"
+            >
               <div class="max-md:order-3 px-6">
                 <EditorContent content={handbook.content} />
                 <div class="h-8"></div>
@@ -207,34 +215,40 @@ handbook.content.forEach((c) => {
       </div>
 
       <!-- INDICE MOBILE -->
-      <div class="md:hidden bg-airbnb px-4 pt-10 py-14">
-        <div class="text-white flex items-center gap-3 mb-4">
-          <div class="rounded bg-white grid place-items-center">
+      <div class="md:hidden bg-slate-100 px-6 pt-10 py-14">
+        <div class="text-slate-800 flex items-center gap-3 mb-4">
+          <div class="rounded bg-airbnb grid place-items-center">
             <span
-              class="skiptranslate material-symbols-outlined text-airbnb scale-75">
+              class="skiptranslate material-symbols-outlined text-white scale-75"
+            >
               list
             </span>
           </div>
           <span class="font-bold text-xl">contents</span>
         </div>
 
-        <div class="relative pb-4">
-          <div
-            class="absolute w-px h-[calc(100%-1rem)] bg-white -translate-x-px top-0 left-3">
-          </div>
-          <ul class="pl-6 pr-4 flex flex-col gap-1">
+        <div class="relative pb-4 font-mont">
+          <!-- <div
+            class="absolute w-px h-[calc(100%-1rem)] bg-slate-700 -translate-x-px top-0 left-3"
+          >
+          </div> -->
+          <ul class="pl-1 pr-4 pt-6 flex flex-col gap-1">
             {
               sections.map((sec) => (
                 <li
                   data-section-name={sec.name}
-                  class="rounded pl-2 pr-4 pt-1 pb-0.5 hover:bg-slate-100 hover:outline hover:outline-1 hover:outline-slate-200 cursor-pointer">
+                  class="rounded pl-2 pr-4 pt-1 cursor-pointer"
+                >
                   <a href={"#" + sec.hash} class="leading-[1.2]">
-                    <p class="text-xs font-serif pb-0.5 text-rose-100">
-                      Sezione {sec.n}
-                    </p>
-                    <p class="-mt-1 mb-1 text-white text-base font-medium ">
-                      {sec.name}
-                    </p>
+                    <div class="flex gap-2 items-start hover:text-airbnb">
+                      <p class=" text-slate-800  font-bold font-mont ">
+                        {sec.n}
+                      </p>
+                      <div class="h-10" />
+                      <p class=" mb-1 text-slate-800 text-base font-medium ">
+                        {sec.name}
+                      </p>
+                    </div>
                   </a>
                 </li>
               ))

@@ -5,10 +5,12 @@ const { id, title, n } = Astro.props;
 <div data-section-title={title} class:list={[n > 1 && "mt-14", "mb-8 z-0"]}>
   <div class="relative overflow-x-hidden max-md:-mx-6">
     <div
-      class="absolute w-[calc(100%+100vw)] h-full bg-airbnb -z-10 -translate-x-[50vw]">
+      class="absolute w-[calc(100%+100vw)] h-full bg-airbnb -z-10 -translate-x-[50vw]"
+    >
     </div>
     <div
-      class="flex px-2 md:px-3 gap-2 text-lg leading-[1.1] md:text-xl md:leading-[1.1] font-bold text-white font-mont uppercase py-3">
+      class="flex px-4 md:px-3 gap-2 text-lg leading-[1.1] md:text-xl md:leading-[1.1] font-bold text-white font-mont uppercase py-3"
+    >
       <p>{n}.</p>
       <h2 id={id} class="scroll-m-8 md:scroll-m-4">{title}</h2>
     </div>
